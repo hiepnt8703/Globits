@@ -132,7 +132,7 @@ public class UserServiceImpl implements UserService {
         if (userOptional.isPresent()) {
             userRepository.delete(userOptional.get());
         } else {
-            throw new RuntimeException("User with ID " + id + " not found");
+            throw new RuntimeException("User with ID " + id + " not found"); 
         }
     }
 
