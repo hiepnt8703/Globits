@@ -1,17 +1,22 @@
 package com.example.rest_api.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.rest_api.domain.Person;
+import com.example.rest_api.domain.Role;
 import com.example.rest_api.domain.User;
 import com.example.rest_api.dto.PersonDTO;
 import com.example.rest_api.dto.UserDTO;
 import com.example.rest_api.repository.PersonRepository;
+import com.example.rest_api.repository.RoleRepository;
 import com.example.rest_api.repository.UserRepository;
 import com.example.rest_api.service.UserService;
 
@@ -19,6 +24,9 @@ import com.example.rest_api.service.UserService;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private PersonRepository personRepository;
@@ -33,6 +41,14 @@ public class UserServiceImpl implements UserService {
             user.setPassword(userDTO.getPassword());
             user.setIs_active(userDTO.getIs_active());
             user.setPerson(personOptional.get());
+
+            Set<Role> roles = new HashSet<>();
+            for (Long roleId : userDTO.getRoleIds()) {
+                Role role = roleRepository.findById(roleId)
+                        .orElseThrow(() -> new RuntimeException("Role with ID " + roleId + " not found"));
+                roles.add(role);
+            }
+            user.setRoles(roles);
             userRepository.save(user);
             return new UserDTO(user);
         } else {
@@ -55,6 +71,13 @@ public class UserServiceImpl implements UserService {
             if (personOptional.isPresent()) {
                 user.setPerson(personOptional.get());
             }
+            Set<Role> roles = new HashSet<>();
+            for (Long roleId : userDTO.getRoleIds()) {
+                Role role = roleRepository.findById(roleId)
+                        .orElseThrow(() -> new RuntimeException("Role with ID " + roleId + " not found"));
+                roles.add(role);
+            }
+            user.setRoles(roles);
             userRepository.save(user);
             return user.getId();
         } else {
@@ -89,6 +112,13 @@ public class UserServiceImpl implements UserService {
                 Person person = user.getPerson();
                 PersonDTO personDTO = new PersonDTO(person);
                 userDTO.setPersonDTO(personDTO); // Gán PersonDTO vào UserDTO
+            }
+
+            if (user.getRoles() != null) {
+                Set<Long> roleIds = user.getRoles().stream()
+                        .map(Role::getId)
+                        .collect(Collectors.toSet());
+                userDTO.setRoleIds(roleIds);
             }
 
             userDTOs.add(userDTO);

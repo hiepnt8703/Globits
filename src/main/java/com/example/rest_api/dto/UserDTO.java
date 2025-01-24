@@ -1,5 +1,8 @@
 package com.example.rest_api.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.example.rest_api.domain.User;
 
 public class UserDTO {
@@ -8,6 +11,7 @@ public class UserDTO {
     private String password;
     private Boolean is_active;
     private PersonDTO personDTO;
+    private Set<Long> roleIds = new HashSet<>();
 
     public UserDTO() {
     }
@@ -27,6 +31,11 @@ public class UserDTO {
         this.is_active = user.getIs_active();
         if (user.getPerson() != null) {
             this.personDTO = new PersonDTO(user.getPerson());
+        }
+        if (user.getRoles() != null) {
+            for (var role : user.getRoles()) {
+                this.roleIds.add(role.getId());
+            }
         }
     }
 
@@ -68,6 +77,14 @@ public class UserDTO {
 
     public void setPersonDTO(PersonDTO personDTO) {
         this.personDTO = personDTO;
+    }
+
+    public Set<Long> getRoleIds() {
+        return roleIds;
+    }
+
+    public void setRoleIds(Set<Long> roleIds) {
+        this.roleIds = roleIds;
     }
 
 }

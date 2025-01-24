@@ -25,25 +25,14 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
-        try {
-            UserDTO createdUser = userService.createUser(userDTO);
-            return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
-        } catch (RuntimeException e) {
-            // Nếu xảy ra lỗi, trả về HTTP 400 Bad Request với thông báo lỗi.
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-        }
+        UserDTO createdUser = userService.createUser(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Long> updateUser(
-            @PathVariable long id,
-            @RequestBody UserDTO userDTO) {
-        try {
-            Long updatedId = userService.updateUser(id, userDTO);
-            return ResponseEntity.ok(updatedId);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
-        }
+    public ResponseEntity<Long> updateUser(@PathVariable Long id, @RequestBody UserDTO userDTO) {
+        Long updatedUserId = userService.updateUser(id, userDTO);
+        return ResponseEntity.ok(updatedUserId);
     }
 
     @GetMapping("/{id}")
