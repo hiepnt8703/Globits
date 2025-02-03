@@ -3,6 +3,8 @@ package com.example.rest_api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,4 +49,11 @@ public class CompanyController {
         companyService.deleteCompany(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<CompanyDTO>> getPageCompany(Pageable pageable) {
+        Page<CompanyDTO> companyPage = companyService.getPageCompany(pageable);
+        return ResponseEntity.ok(companyPage);
+    }
+
 }

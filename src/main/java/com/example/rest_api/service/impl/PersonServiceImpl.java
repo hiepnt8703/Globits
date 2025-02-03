@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.example.rest_api.domain.Company;
 import com.example.rest_api.domain.Person;
@@ -80,14 +82,6 @@ public class PersonServiceImpl implements PersonService {
     public PersonDTO findPersonByid(long id) {
         Optional<Person> personOptional = this.personRepository.findById(id);
         if (personOptional.isPresent()) {
-            // Person person = personOptional.get();
-
-            // PersonDTO personDTO = new PersonDTO();
-            // personDTO.setFullName(person.getFullName());
-            // personDTO.setGender(person.getGender());
-            // personDTO.setBirthdate(person.getBirthdate());
-            // personDTO.setPhoneNumber(person.getPhoneNumber());
-            // personDTO.setAddress(person.getPhoneNumber());
             return new PersonDTO(personOptional.get());
         } else {
             throw new RuntimeException("Person with ID " + id + " not found.");
@@ -103,6 +97,11 @@ public class PersonServiceImpl implements PersonService {
         } else {
             throw new RuntimeException("Person with ID " + id + " not found");
         }
+    }
+
+    @Override
+    public Page<PersonDTO> getPagePerson(Pageable pageable) {
+        return personRepository.findAll(pageable).map(PersonDTO::new);
     }
 
 }

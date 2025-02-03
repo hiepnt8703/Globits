@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.example.rest_api.dto.DepartmentDTO;
 import com.example.rest_api.service.DepartmentService;
 
@@ -25,8 +24,9 @@ public class DepartmentController {
     private DepartmentService departmentService;
 
     @GetMapping("/company/{companyId}")
-    public List<DepartmentDTO> getDepartmentsByCompanyId(@PathVariable Long companyId) {
-        return departmentService.getDepartmentsByCompanyId(companyId);
+    public ResponseEntity<List<DepartmentDTO>> getDepartmentsByCompanyId(@PathVariable Long companyId) {
+        List<DepartmentDTO> departments = departmentService.getDepartmentsByCompanyId(companyId);
+        return ResponseEntity.ok(departments);
     }
 
     @PostMapping

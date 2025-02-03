@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.rest_api.domain.Company;
@@ -68,6 +70,11 @@ public class CompanyServiceImpl implements CompanyService {
         } else {
             throw new RuntimeException("Company with ID " + id + " not found");
         }
+    }
+
+    @Override
+    public Page<CompanyDTO> getPageCompany(Pageable pageable) {
+        return companyRepository.findAll(pageable).map(CompanyDTO::new);
     }
 
 }

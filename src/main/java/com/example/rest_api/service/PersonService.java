@@ -2,6 +2,9 @@ package com.example.rest_api.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.example.rest_api.dto.PersonDTO;
 
 public interface PersonService {
@@ -14,4 +17,6 @@ public interface PersonService {
     List<PersonDTO> getAllPerson();
 
     void deletePerson(long id);
+
+    Page<PersonDTO> getPagePerson(Pageable pageable);
 }

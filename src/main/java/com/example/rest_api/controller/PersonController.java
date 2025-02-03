@@ -4,11 +4,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.rest_api.dto.PersonDTO;
+import com.example.rest_api.dto.ProjectDTO;
 import com.example.rest_api.service.PersonService;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -79,6 +82,12 @@ public class PersonController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(null);
         }
+    }
+
+    @GetMapping("/page")
+    public ResponseEntity<Page<PersonDTO>> getPageProject(Pageable pageable) {
+        Page<PersonDTO> personPage = personService.getPagePerson(pageable);
+        return ResponseEntity.ok(personPage);
     }
 
 }
