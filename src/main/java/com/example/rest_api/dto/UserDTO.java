@@ -29,9 +29,9 @@ public class UserDTO {
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.is_active = user.getIs_active();
-        if (user.getPerson() != null) {
-            this.personDTO = new PersonDTO(user.getPerson());
-        }
+//        if (user.getPerson() != null) {
+//            this.personDTO = new PersonDTO(user.getPerson());
+//        }
         if (user.getRoles() != null) {
             for (var role : user.getRoles()) {
                 this.roleIds.add(role.getId());

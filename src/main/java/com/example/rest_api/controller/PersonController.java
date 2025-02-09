@@ -4,11 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.rest_api.dto.PersonDTO;
-import com.example.rest_api.dto.ProjectDTO;
 import com.example.rest_api.service.PersonService;
-
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -72,13 +69,9 @@ public class PersonController {
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletePerson(@PathVariable long id) {
         try {
-            // Gọi phương thức findById từ Service
             personService.deletePerson(id);
-
-            // Trả về phản hồi HTTP 200 với đối tượng PersonDTO
             return ResponseEntity.ok("Person with ID " + id + " has been deleted.");
         } catch (RuntimeException e) {
-            // Trả về phản hồi HTTP 404 nếu không tìm thấy
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(null);
         }
@@ -89,5 +82,4 @@ public class PersonController {
         Page<PersonDTO> personPage = personService.getPagePerson(pageable);
         return ResponseEntity.ok(personPage);
     }
-
 }

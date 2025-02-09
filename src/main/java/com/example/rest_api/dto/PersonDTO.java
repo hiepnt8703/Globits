@@ -3,6 +3,7 @@ package com.example.rest_api.dto;
 import java.time.LocalDate;
 
 import com.example.rest_api.domain.Person;
+import com.example.rest_api.domain.User;
 
 public class PersonDTO {
     private long id;
@@ -13,12 +14,13 @@ public class PersonDTO {
     private String phoneNumber;
     private String address;
     private CompanyDTO companyDTO;
+    private UserDTO user;
 
     public PersonDTO() {
     }
 
     public PersonDTO(long id, String fullName, String gender, LocalDate birthdate, String phoneNumber, String address,
-            CompanyDTO companyDTO) {
+            CompanyDTO companyDTO , UserDTO user) {
         this.id = id;
         this.fullName = fullName;
         this.gender = gender;
@@ -37,6 +39,9 @@ public class PersonDTO {
         this.address = person.getAddress();
         if (person.getCompany() != null) {
             this.companyDTO = new CompanyDTO(person.getCompany());
+        }
+        if (person.getUser() != null){
+            this.user = new UserDTO(person.getUser());
         }
     }
 
@@ -96,4 +101,11 @@ public class PersonDTO {
         this.companyDTO = companyDTO;
     }
 
+    public UserDTO getUser() {
+        return user;
+    }
+
+    public void setUser(UserDTO user) {
+        this.user = user;
+    }
 }
