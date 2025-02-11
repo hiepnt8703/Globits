@@ -18,12 +18,12 @@ public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
     private String fullName;
     private String gender;
     private LocalDate birthdate;
     private String phoneNumber;
     private String address;
+    private String avatar;
 
     @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
     private User user;
@@ -96,11 +96,26 @@ public class Person {
         this.company = company;
     }
 
-    @Override
-    public String toString() {
-        return "Person [id=" + id + ", fullName=" + fullName + ", gender=" + gender + ", birthdate=" + birthdate
-                + ", phoneNumber=" + phoneNumber + ", address=" + address + ", user=" + user + ", company=" + company
-                + "]";
+    public String getAvatar() {
+        return avatar;
     }
 
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", gender='" + gender + '\'' +
+                ", birthdate=" + birthdate +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", address='" + address + '\'' +
+                ", avatar='" + avatar + '\'' +
+                ", user=" + user +
+                ", company=" + company +
+                '}';
+    }
 }

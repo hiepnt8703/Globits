@@ -6,17 +6,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.example.rest_api.dto.PersonDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface PersonService {
-    PersonDTO savePerson(PersonDTO personDTO);
 
-    Long updatePerson(long id, PersonDTO personDTO);
+  PersonDTO savePerson(PersonDTO personDTO);
 
-    PersonDTO findPersonByid(long id);
+  Long updatePerson(long id, PersonDTO personDTO);
 
-    List<PersonDTO> getAllPerson();
+  PersonDTO findPersonByid(long id);
 
-    void deletePerson(long id);
+  List<PersonDTO> getAllPerson();
 
-    Page<PersonDTO> getPagePerson(Pageable pageable);
+  void deletePerson(long id);
+
+  Page<PersonDTO> getPagePerson(Pageable pageable);
+
+  String uploadAvatar(Long id, MultipartFile file);
 }
